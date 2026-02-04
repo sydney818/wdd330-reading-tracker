@@ -1,10 +1,10 @@
 /* -------- ROOT VARIABLES -------- */
 :root {
-    --text: #070b0b;
-    --bg: #f7fbfa;
-    --primary: #54afa6;
-    --secondary: #3f9c94;
-    --accent: #7ccfc7;
+    --text: #2f2f2f;
+    --bg: #f7f6f6;
+    --primary: #ABB0C7;
+    --secondary: #C6D4DC;
+    --accent: #c6dfe1;
 
     --card: #ffffff;
     --border: rgba(7, 11, 11, 0.10);
@@ -156,6 +156,7 @@ li {
 .btn:hover {
     background: var(--secondary);
     transform: translateY(-1px);
+    color: var(--text);
 }
 
 .btn:active {
@@ -206,7 +207,61 @@ footer {
 
 
 
+/* Tracker Page */
 
+.tracker {
+    display: grid;
+    gap:1.5rem;
+    align-content: start;
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1rem;
+    margin: 0;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+}
+
+input {
+    padding: 0.6rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    font-family: inherit;
+}
+
+button {
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+#childList {
+    margin-top: 1rem;
+    padding-left: 1.2rem;
+    list-style: none;
+   
+}
+
+#childList li {
+    margin: 0.25rem 0;
+}
+
+.child-item {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.5rem 0.75rem;
+    margin-top: 1rem;
+    width: 100%;
+}
 
 
 

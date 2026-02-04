@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="WDD 330 - Web Frontend Development II by Sydney Anderson.">
+    <meta name="author" content="Sydney Anderson">
+    <title>Reading & Learning Tracker</title>
+    
+    
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../styles/styles.css" />
+    
+    <!-- SCRIPTS -->
+    <script src="../scripts/main.js" type="module"></script>
+    <script src="../scripts/tracker.js" type="module"></script>
+</head>
+<body>
+    <header class = "site-header">
+        <h1>Reading Tracker</h1>
+        <p>Track reading progress and rewards</p>
+        <a href="../index.html" class="btn">Home</a>
+    </header>
+
+    <main class ="container tracker">
+        <section class="card reading-log">
+            <h2>Add a Child</h2>
+            
+            <form id="childForm">
+                <label for="childName">Child's name</label>
+                <input id="childName" name="childName" type="text" required />
+
+                <button class="btn" type="submit">Add Child</button>
+            </form>
+
+            <div id="child-list"></div>
+        </section>
+        <section class="card reading-log">
+            <h2>Reading Log</h2>
+            <p>Spot for Reading entries</p>
+        </section>
+    </main>
+        <footer>
+            <div class="footer-info">
+                <p>&copy;<span id="currentyear"></span> Sydney Anderson | WDD 330 Final Project</p>
+                <p id="lastModified"></p>
+            </div>
+        
+        </footer>
+    
+</body>
+</html>

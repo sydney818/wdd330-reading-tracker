@@ -1,4 +1,11 @@
 // Footer - Current Year & Last Modified Date
-document.getElementById("currentyear").textContent = new Date().getFullYear();
+const yearSpan = document.getElementById("currentyear");
+const lastModified = document.getElementById("lastModified");
 
-document.getElementById("lastModified").textContent = "Last Modified:" + document.lastModified;
+if (yearSpan) {
+    yearSpan.textContent = new Date().getFullYear();
+}
+
+if (lastModified) {
+    lastModified.textContent = "Last Modified: " + document.lastModified;
+}
