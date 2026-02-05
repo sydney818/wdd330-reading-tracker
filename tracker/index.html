@@ -39,11 +39,19 @@
                 <button class="btn" type="submit">Add Child</button>
             </form>
 
-            <div id="child-list"></div>
+            <h3 id="activeChildTitle">No child selected</h3>
+            <ul id="childList" class="child-list"></ul>
         </section>
         <section class="card reading-log">
             <h2>Reading Log</h2>
-            <p>Spot for Reading entries</p>
+            <form id="logForm">
+                <input id="bookTitle" type="text" placeholder="Book title" required />
+                <input id="minutes" type="number" placeholder="Minutes" min="1" required />
+                <input id="logDate" type="date" />
+                <button class="btn" type="submit">Add Log</button>
+            </form>
+
+            <ul id="logList"></ul>
         </section>
     </main>
         <footer>

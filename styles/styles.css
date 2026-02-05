@@ -243,25 +243,47 @@ button {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
 }
 
-#childList {
-    margin-top: 1rem;
-    padding-left: 1.2rem;
-    list-style: none;
-   
-}
 
-#childList li {
-    margin: 0.25rem 0;
+#childList {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0;
+    display: grid;
+    gap: 0.5rem;
 }
 
 .child-item {
     background: #fff;
     border: 1px solid var(--border);
     border-radius: 10px;
-    padding: 0.5rem 0.75rem;
-    margin-top: 1rem;
+    padding: 0.6rem 0.75rem;
     width: 100%;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
+
+.child-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+}
+
+.child-item.active {
+    border-color: var(--primary);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.10);
+}
+
+#activeChildTitle {
+    margin: 1rem 0 0;
+    font-size: 1rem;
+    opacity: 0.85;
+}
+
+#logList {
+    list-style: none;
+    padding: 0;
+    margin: 1rem;
+}
+
 
 
 
