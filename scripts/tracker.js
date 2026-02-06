@@ -11,6 +11,7 @@ const bookTitleInput = document.querySelector("#bookTitle");
 const minutesInput = document.querySelector("#minutes");
 const logDateInput = document.querySelector("#logDate");
 const logList = document.querySelector("#logList");
+const minutesTotal = document.querySelector("#minutesTotal")
 
 
 // 2) LOAD SAVED DATA (localStorage)
@@ -69,13 +70,41 @@ function showLogs() {
     logList.innerHTML = "";
 
     const selectedChild = children.find((child) => child.id === activeChild);
-    if (!selectedChild) return;
+    if (!selectedChild) {
+        minutesTotal.textContent = "";
+        return;
+    }
 
-    selectedChild.logs.forEach((log) => {
+    selectedChild.logs.forEach((log, index) => {
         const li = document.createElement("li");
-        li.textContent = `${log.date} - ${log.title} (${log.minutes} min)`;
+        li.classList.add("log-item");
+
+        const text = document.createElement("span");
+        text.textContent = `${log.date} - ${log.title} (${log.minutes} min)`;
+
+        const delBtn = document.createElement("button");
+        delBtn.type = "button";
+        delBtn.textContent = "✕";
+        delBtn.classList.add("delete-log");
+
+        delBtn.addEventListener("click", () => {
+            selectedChild.logs.splice(index, 1);
+            localStorage.setItem("children", JSON.stringify(children));
+            showLogs();
+        });
+
+        li.appendChild(text);
+        li.appendChild(delBtn);
         logList.appendChild(li);
     });
+
+    // Total Minutes
+    const total = selectedChild.logs.reduce(
+        (sum, log) => sum + Number(log.minutes),
+        0
+    );
+
+    minutesTotal.textContent = `Total minutes read: ${total}`;
 }
 
 // Disable/enable the log form until a child is selected
@@ -153,3 +182,4 @@ showChildren();
 showActiveChild();
 showLogs();
 setLogFormEnabled(!!activeChild);
+
