@@ -1,4 +1,5 @@
 
+import { fetchCoverUrlByTitle } from "./openLibrary.js";
 // 1) GET ELEMENTS FROM THE HTML (querySelector)
 
 const form = document.querySelector("#childForm");
@@ -13,6 +14,10 @@ const logDateInput = document.querySelector("#logDate");
 const logList = document.querySelector("#logList");
 const minutesTotal = document.querySelector("#minutesTotal")
 
+
+function makeId() {
+    return Date.now().toString() + "-" + Math.random().toString(16).slice(2);
+}
 
 // 2) LOAD SAVED DATA (localStorage)
 
@@ -80,7 +85,8 @@ function showLogs() {
         li.classList.add("log-item");
 
         const text = document.createElement("span");
-        text.textContent = `${log.date} - ${log.title} (${log.minutes} min)`;
+        const author = log.author ?? "Unknown";
+        text.textContent = `${log.date} – ${log.title} by ${author} (${log.minutes} min)`;
 
         const delBtn = document.createElement("button");
         delBtn.type = "button";
@@ -92,6 +98,17 @@ function showLogs() {
             localStorage.setItem("children", JSON.stringify(children));
             showLogs();
         });
+
+        const img = document.createElement("img");
+        img.classList.add("log-cover");
+        img.alt = `Cover for ${log.title}`;
+        img.loading = "lazy";
+
+        if (log.coverUrl) {
+            img.src = log.coverUrl;
+            img.onerror = () => img.remove();
+            li.appendChild(img);
+        }
 
         li.appendChild(text);
         li.appendChild(delBtn);
@@ -150,7 +167,7 @@ form.addEventListener("submit", (event) => {
 });
 
 // ADD LOG
-logForm.addEventListener("submit", (event) => {
+logForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const selectedChild = children.find((child) => child.id === activeChild);
@@ -166,7 +183,29 @@ logForm.addEventListener("submit", (event) => {
 
     if (!title || !minutes) return;
 
-    selectedChild.logs.push({ title, minutes, date });
+    let bookData = null;
+    try {
+        bookData = await fetchCoverUrlByTitle(title);
+    } catch (err) {
+        console.error("Book fetch failed:", err);
+    }
+
+    
+    selectedChild.logs.push({
+        id: makeId(),
+        title,
+        minutes,
+        date,
+
+        author: bookData?.author ?? "Unknown",
+        publishYear: bookData?.publishYear ?? "N/A",
+        pages: bookData?.pages ?? "N/A",
+        isbn: bookData?.isbn ?? "N/A",
+        subjects: bookData?.subjects ?? [],
+
+        coverUrl: bookData?.coverUrl ?? ""
+    });
+
     localStorage.setItem("children", JSON.stringify(children));
 
     bookTitleInput.value = "";
