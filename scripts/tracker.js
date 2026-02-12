@@ -1,5 +1,6 @@
 
 import { fetchCoverUrlByTitle } from "./openLibrary.js";
+import { getQuotes } from "./quotesApi.js";
 // 1) GET ELEMENTS FROM THE HTML (querySelector)
 
 const form = document.querySelector("#childForm");
@@ -13,6 +14,7 @@ const minutesInput = document.querySelector("#minutes");
 const logDateInput = document.querySelector("#logDate");
 const logList = document.querySelector("#logList");
 const minutesTotal = document.querySelector("#minutesTotal")
+const pointsTotalEl = document.querySelector("#pointsTotal")
 
 
 function makeId() {
@@ -77,8 +79,12 @@ function showLogs() {
     const selectedChild = children.find((child) => child.id === activeChild);
     if (!selectedChild) {
         minutesTotal.textContent = "";
+        pointsTotalEl.textContent = "";
         return;
     }
+
+  
+    selectedChild.logs = selectedChild.logs || [];
 
     selectedChild.logs.forEach((log, index) => {
         const li = document.createElement("li");
@@ -117,11 +123,15 @@ function showLogs() {
 
     // Total Minutes
     const total = selectedChild.logs.reduce(
-        (sum, log) => sum + Number(log.minutes),
+        (sum, log) => sum + Number(log.minutes || 0),
         0
     );
 
     minutesTotal.textContent = `Total minutes read: ${total}`;
+
+    // Points (simple: 1 point per minute)
+    const points = total;
+    pointsTotalEl.textContent = `Points earned: ${points}`;
 }
 
 // Disable/enable the log form until a child is selected
@@ -222,3 +232,42 @@ showActiveChild();
 showLogs();
 setLogFormEnabled(!!activeChild);
 
+
+// Quotes
+const quoteBtn = document.querySelector("#quoteBtn");
+const quoteList = document.querySelector("#quoteList");
+
+async function loadQuotes() {
+    if (!quoteList) return;
+
+    quoteList.innerHTML = "<li>Loading...</li>";
+
+    const quotes = await getQuotes(3);
+
+    quoteList.innerHTML = "";
+
+    quotes.forEach((q) => {
+        const li = document.createElement("li");
+
+        const tags =
+            Array.isArray(q.tags) && q.tags.length
+                ? ` • ${q.tags.slice(0, 2).join(", ")}`
+                : "";
+
+        li.innerHTML = `
+            “${q.content}”
+            <br><small>— ${q.author}${tags}</small>`;
+            quoteList.appendChild(li);
+    });
+
+    if (quotes.length === 0) {
+        quoteList.innerHTML = "<li>No quotes returned.</li>";
+    }
+}
+
+if (quoteBtn) {
+    quoteBtn.addEventListener("click", loadQuotes);
+}
+
+// optional: auto-load once on page load
+loadQuotes();

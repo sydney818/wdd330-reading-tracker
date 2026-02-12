@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="WDD 330 - Web Frontend Development II by Sydney Anderson.">
+    <meta name="author" content="Sydney Anderson">
+    <title>Rewards</title>
+
+
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../styles/styles.css" />
+
+    <!-- SCRIPTS -->
+    <script src="../scripts/main.js" type="module" defer></script>
+    <script src="../scripts/rewards.js" type="module" defer></script>
+</head>
+
+<body>
+    <header class="site-header">
+        <h1>Rewards</h1>
+        <p>Redeem points for fun rewards</p>
+        <a href="../tracker/index.html" class="btn">Back to Tracker</a>
+
+    </header>
+    <main class="container">
+        <section class="card">
+            <h2 id="rewardChildName">No Child selected</h2>
+            <p id="rewardPoints"></p>
+        </section>
+
+        <!-- Big Rewards -->
+        <section class="card">
+            <h2>Big Rewards</h2>
+            <ul id="rewardList" aria-live="polite"></ul>
+        </section>
+        
+
+    </main>
+    <footer>
+        <div class="footer-info">
+            <p>&copy;<span id="currentyear"></span> Sydney Anderson | WDD 330 Final Project</p>
+            <p id="lastModified"></p>
+        </div>
+
+    </footer>
+</body>
+
+</html>
