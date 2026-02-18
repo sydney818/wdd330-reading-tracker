@@ -30,20 +30,38 @@
         <a href="../tracker/index.html" class="btn">Back to Tracker</a>
 
     </header>
-    <main class="container">
+    <main class="container rewards-page">
         <section class="card">
             <h2 id="rewardChildName">No Child selected</h2>
-            <p id="rewardPoints"></p>
+
+            <div class="points-block">
+                <p class="points-main" id="rewardPoints"></p>
+                <p class="points-sub" id="rewardBreakdown"></p>
+            </div>
+
+
+            <h3>Add a Custom Reward</h3>
+            
+            <form id="customRewardForm">
+                <label for="rewardTitle">Reward title</label>
+                <input id="rewardTitle" type="text" required placeholder="Example: Extra screen time">
+            
+                <label for="rewardCost">Cost (points)</label>
+                <input id="rewardCost" type="number" min="1" required placeholder="Example: 40">
+            
+                <label for="rewardDesc">Description</label>
+                <input id="rewardDesc" type="text" maxlength="80" placeholder="Optional">
+            
+                <button class="btn" type="submit">Add Reward</button>
+            </form>
         </section>
 
-        <!-- Big Rewards -->
         <section class="card">
             <h2>Big Rewards</h2>
             <ul id="rewardList" aria-live="polite"></ul>
         </section>
-        
-
     </main>
+
     <footer>
         <div class="footer-info">
             <p>&copy;<span id="currentyear"></span> Sydney Anderson | WDD 330 Final Project</p>

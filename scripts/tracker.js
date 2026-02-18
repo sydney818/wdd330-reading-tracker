@@ -1,8 +1,8 @@
 
 import { fetchCoverUrlByTitle } from "./openLibrary.js";
 import { getQuotes } from "./quotesApi.js";
-// 1) GET ELEMENTS FROM THE HTML (querySelector)
 
+// 1) GET ELEMENTS FROM THE HTML (querySelector)
 const form = document.querySelector("#childForm");
 const input = document.querySelector("#childName");
 const list = document.querySelector("#childList");
@@ -30,6 +30,24 @@ let activeChild = localStorage.getItem("activeChild") || "";
 if (!activeChild && children.length > 0) {
     activeChild = children[0].id;
     localStorage.setItem("activeChild", activeChild);
+}
+
+function getTotalPoints(child) {
+    return (child.logs || []).reduce(
+        (sum, log) => sum + Number(log.minutes || 0),
+        0
+    );
+}
+
+function getSpentPoints(child) {
+    return (child.redeemedRewards || []).reduce(
+        (sum, r) => sum + Number(r.cost || 0),
+        0
+    );
+}
+
+function getAvailablePoints(child) {
+    return getTotalPoints(child) - getSpentPoints(child);
 }
 
 
@@ -83,7 +101,7 @@ function showLogs() {
         return;
     }
 
-  
+
     selectedChild.logs = selectedChild.logs || [];
 
     selectedChild.logs.forEach((log, index) => {
@@ -130,8 +148,11 @@ function showLogs() {
     minutesTotal.textContent = `Total minutes read: ${total}`;
 
     // Points (simple: 1 point per minute)
-    const points = total;
-    pointsTotalEl.textContent = `Points earned: ${points}`;
+    const earned = getTotalPoints(selectedChild);
+    const spent = getSpentPoints(selectedChild);
+    const available = Math.max(0, earned - spent);
+
+    pointsTotalEl.textContent = `Available points: ${available}`;
 }
 
 // Disable/enable the log form until a child is selected
@@ -200,7 +221,7 @@ logForm.addEventListener("submit", async (event) => {
         console.error("Book fetch failed:", err);
     }
 
-    
+
     selectedChild.logs.push({
         id: makeId(),
         title,
@@ -257,7 +278,7 @@ async function loadQuotes() {
         li.innerHTML = `
             “${q.content}”
             <br><small>— ${q.author}${tags}</small>`;
-            quoteList.appendChild(li);
+        quoteList.appendChild(li);
     });
 
     if (quotes.length === 0) {
