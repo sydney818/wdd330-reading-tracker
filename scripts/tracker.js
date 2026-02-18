@@ -267,6 +267,11 @@ async function loadQuotes() {
 
     quoteList.innerHTML = "";
 
+    if (!quotes || quotes.length === 0) {
+        quoteList.innerHTML = "<li>Quotes failed to load.</li>";
+        return;
+    }
+
     quotes.forEach((q) => {
         const li = document.createElement("li");
 
@@ -276,19 +281,20 @@ async function loadQuotes() {
                 : "";
 
         li.innerHTML = `
-            “${q.content}”
-            <br><small>— ${q.author}${tags}</small>`;
+      “${q.content}”
+      <br><small>— ${q.author}${tags}</small>
+    `;
+
         quoteList.appendChild(li);
     });
-
-    if (quotes.length === 0) {
-        quoteList.innerHTML = "<li>No quotes returned.</li>";
-    }
 }
+
 
 if (quoteBtn) {
-    quoteBtn.addEventListener("click", loadQuotes);
+    quoteBtn.addEventListener("click", () => {
+        console.log("Quote button clicked ✅");
+        loadQuotes();
+    });
 }
 
-// optional: auto-load once on page load
 loadQuotes();
